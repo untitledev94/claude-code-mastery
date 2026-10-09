@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>계산기</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+  }
+  .btn {
+    transition: transform 0.08s ease, background-color 0.15s ease;
+  }
+  .btn:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+
+  <div class="w-80 bg-slate-800 rounded-2xl shadow-2xl p-5">
+    <!-- 디스플레이: 지금까지 입력된 수식과 결과를 보여줌 -->
+    <div class="mb-4">
+      <div id="expression" class="text-slate-400 text-right text-sm h-5 truncate">&nbsp;</div>
+      <div id="display" class="text-white text-right text-4xl font-semibold h-12 overflow-x-auto">0</div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-3">
+      <button class="btn col-span-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl py-4 text-lg" onclick="clearAll()">C</button>
+      <button class="btn bg-slate-600 hover:bg-slate-500 text-white rounded-xl py-4 text-lg" onclick="deleteLast()">⌫</button>
+      <button class="btn bg-amber-600 hover:bg-amber-500 text-white rounded-xl py-4 text-lg" onclick="appendOperator('/')">÷</button>
+
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('7')">7</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('8')">8</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('9')">9</button>
+      <button class="btn bg-amber-600 hover:bg-amber-500 text-white rounded-xl py-4 text-lg" onclick="appendOperator('*')">×</button>
+
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('4')">4</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('5')">5</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('6')">6</button>
+      <button class="btn bg-amber-600 hover:bg-amber-500 text-white rounded-xl py-4 text-lg" onclick="appendOperator('-')">−</button>
+
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('1')">1</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('2')">2</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('3')">3</button>
+      <button class="btn bg-amber-600 hover:bg-amber-500 text-white rounded-xl py-4 text-lg" onclick="appendOperator('+')">+</button>
+
+      <button class="btn col-span-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('0')">0</button>
+      <button class="btn bg-slate-700 hover:bg-slate-600 text-white rounded-xl py-4 text-lg" onclick="appendDigit('.')">.</button>
+      <button class="btn bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl py-4 text-lg" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+<script>
+  // 현재까지 입력한 수식을 토큰 배열로 보관 (예: ['12', '+', '3'])
+  let tokens = [];
+  let currentNumber = '0';
+
+  const displayEl = document.getElementById('display');
+  const expressionEl = document.getElementById('expression');
+
+  function render() {
+    displayEl.textContent = currentNumber;
+    expressionEl.textContent = tokens.join(' ') || ' ';
+  }
+
+  function appendDigit(digit) {
+    if (digit === '.' && currentNumber.includes('.')) return;
+    currentNumber = currentNumber === '0' && digit !== '.' ? digit : currentNumber + digit;
+    render();
+  }
+
+  function appendOperator(op) {
+    tokens.push(currentNumber, op);
+    currentNumber = '0';
+    render();
+  }
+
+  function clearAll() {
+    tokens = [];
+    currentNumber = '0';
+    render();
+  }
+
+  function deleteLast() {
+    currentNumber = currentNumber.length > 1 ? currentNumber.slice(0, -1) : '0';
+    render();
+  }
+
+  // TODO(human): 토큰 배열(tokens)과 currentNumber를 이용해 최종 계산 결과를 구하는 로직을 구현하세요.
+  // - tokens 배열에는 ['숫자', '연산자', '숫자', '연산자', ...] 형태로 값이 쌓여 있습니다.
+  // - currentNumber 는 아직 연산자 뒤에 붙지 않은 마지막 입력값입니다.
+  // - 계산이 끝나면 결과를 currentNumber 에 문자열로 저장하고 tokens 를 비운 뒤 render() 를 호출하세요.
+  function calculate() {
+
+  }
+</script>
+</body>
+</html>
