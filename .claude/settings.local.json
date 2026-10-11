@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash"
-    ]
-  },
-  "outputStyle": "jsh style",
-  "showClearContextOnPlanAccept": true
-}
